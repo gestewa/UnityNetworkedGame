@@ -19,6 +19,18 @@ public class PlayerController : NetworkBehaviour {
         movement = new Vector3(0.0f, 0.0f, 0.0f);
     }
 
+    public override void OnStartLocalPlayer()
+    {
+        GetComponent<MeshRenderer>().material.color = Color.blue;
+        // Pass the camera a refrence to this player's transform
+        Camera.main.GetComponent<CameraController>().playerTransform = transform;
+        
+        // If the player was not rolling, this would be adequate
+        // Camera.main.transform.position = transform.position - transform.forward * 10 + transform.up*3;
+        // Camera.main.transform.LookAt(transform.position);
+        // Camera.main.transform.parent = transform;
+    }
+
     void FixedUpdate ()
     {
         if (!isLocal){ return; }
