@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class Spawn : MonoBehaviour
+public class Spawn : NetworkBehaviour
 {
     public GameObject spawnable;
     public int maxSpawned = 10, spawnInterval = 150;
@@ -30,7 +31,8 @@ public class Spawn : MonoBehaviour
         float x = Random.Range(MinX,MaxX);
         float z = Random.Range(MinZ,MaxZ);
         float y = 0.46f;
-        Instantiate(spawnable, new Vector3(x,y,z), Quaternion.identity);
+        GameObject newlySpawned = Instantiate(spawnable, new Vector3(x,y,z), Quaternion.identity);
+        NetworkServer.Spawn(newlySpawned);
     }
 
     void countSpawned(){

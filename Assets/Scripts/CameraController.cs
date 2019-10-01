@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class CameraController : NetworkBehaviour {
+public class CameraController : MonoBehaviour {
 
     private Transform _playerTransform;
 
