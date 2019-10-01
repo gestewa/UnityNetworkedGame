@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class PlayerController : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     
     private Rigidbody rb;
     private Vector3 movement;
+    private bool isLocal;
 
     void Start ()
     {
@@ -30,8 +32,11 @@ public class PlayerController : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Pickup"))
         {
-            Debug.Log("hit: "+other.gameObject.tag+"\n");
             Destroy(other.gameObject);
         }
+    }
+
+    void UpdateIsLocal(){
+        isLocal = GetComponent<NetworkIdentity>().isLocalPlayer;
     }
 }

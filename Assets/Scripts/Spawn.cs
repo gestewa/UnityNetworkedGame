@@ -26,14 +26,13 @@ public class Spawn : MonoBehaviour
     void Update()
     {
 
-        if (time == 50) { spawn(); time = 0;}
+        if (time == 150) { spawn(); time = 0;}
         time += 1;
         updateCount();
     }
 
     void spawn(){
-        if (count >= maxCount) return;
-        Debug.Log(count);
+        if (count >= maxCount) { time = 0; return;}
         float x = Random.Range(MinX,MaxX);
         float z = Random.Range(MinZ,MaxZ);
         float y = 0.46f;
