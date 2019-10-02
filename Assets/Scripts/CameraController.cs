@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour {
     private GameObject player;
     private Vector3 offset;
     private Vector3 origCamPos;
+    
 
     void Start ()
     {
@@ -21,18 +22,17 @@ public class CameraController : MonoBehaviour {
 
     void UpdatePlayer(){
         UnityEngine.GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        if (players.Length == 0){return;} 
+        if (players.Length == 0){player = null; return;} 
         foreach (GameObject p in players) {
-             if (p.GetComponent<NetworkIdentity>().isLocalPlayer){
-                 if (player == null){
-                    player = p;
+            // In the list of players, find the one that the camera should track
+            if (p.GetComponent<NetworkIdentity>().isLocalPlayer){
+                // Check if we need to update the camera offset from the player
+                if (player == null){
                     offset = transform.position - player.transform.position;
-                 }
-                 else {
-                    player = p;
-                 }
-                 return;
-             }
+                }
+                player = p; 
+                return;
+            }
         }
         player = null;
         transform.position = origCamPos;

@@ -21,7 +21,7 @@ public class PlayerController : NetworkBehaviour {
 
     void FixedUpdate ()
     {
-        if (!isLocal){return;}
+        if (!isLocal){ return; }
         float moveHorizontal = Input.GetAxis ("right");
         float moveVertical = Input.GetAxis ("up");
 
@@ -33,6 +33,7 @@ public class PlayerController : NetworkBehaviour {
 
     void OnTriggerEnter(Collider other) 
     {
+        // Destroy collectable objects
         if (other.gameObject.CompareTag("Pickup"))
         {
             Destroy(other.gameObject);
