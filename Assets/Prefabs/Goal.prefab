@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6594454240263069184}
   - component: {fileID: 6594454240263069185}
   - component: {fileID: 6594454240263069245}
+  - component: {fileID: 57613266195658403}
+  - component: {fileID: 1060894521715506294}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Pickup
@@ -105,3 +107,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4153f8f65c50e27468b56e0d30dbbb51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &57613266195658403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6594454240263069186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverOnly: 0
+  localPlayerAuthority: 0
+  m_AssetId: 10f89123a8435b74582134d02183a37c
+  m_SceneId: 0
+--- !u!114 &1060894521715506294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6594454240263069186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  compressRotation: 1

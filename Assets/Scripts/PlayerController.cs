@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : NetworkBehaviour {
 
     public float speed;
-    
+    public int id;
+
     private Rigidbody rb;
     private Vector3 movement;
     private bool isLocal;
 
     void Start ()
     {
+        isLocal = GetComponent<NetworkIdentity>().isLocalPlayer;
         rb = GetComponent<Rigidbody>();
         movement = new Vector3(0.0f, 0.0f, 0.0f);
     }
 
     void FixedUpdate ()
     {
+        if (!isLocal){return;}
         float moveHorizontal = Input.GetAxis ("right");
         float moveVertical = Input.GetAxis ("up");
 
@@ -36,7 +39,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void UpdateIsLocal(){
-        isLocal = GetComponent<NetworkIdentity>().isLocalPlayer;
+    public void setID(int ID){
+        id = ID;
     }
 }
