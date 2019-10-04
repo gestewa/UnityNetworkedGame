@@ -34,7 +34,6 @@ public class PlayerController : NetworkBehaviour {
         // Camera.main.transform.parent = transform;
     }
 
-    [ServerCallback]
     void OnTriggerEnter(Collider other) 
     {
         if (!isLocal){ return; }
