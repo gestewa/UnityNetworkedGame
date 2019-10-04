@@ -12,17 +12,19 @@ public class PlayerController : NetworkBehaviour {
     private bool isLocal;
     private Score score;
 
+    [HideInInspector]
     public string playerName;
 
     void Start ()
     {
         isLocal = GetComponent<NetworkIdentity>().isLocalPlayer;
-        score = GameObject.Find("ScoreKeeper").GetComponent<Score>();
-        score.addPlayer(playerName);
     }
 
     public override void OnStartLocalPlayer()
     {
+        score = GameObject.Find("ScoreKeeper").GetComponent<Score>();
+        CmdRegister(playerName);
+
         GetComponent<MeshRenderer>().material.color = Color.blue;
         // Pass the camera a refrence to this player's transform
         Camera.main.GetComponent<CameraController>().playerTransform = transform;
@@ -41,7 +43,19 @@ public class PlayerController : NetworkBehaviour {
         if (other.gameObject.CompareTag("Pickup"))
         {
             Destroy(other.gameObject);
-            score.score(playerName);
+            CmdUpdateScore(playerName);
         }
     }
+
+        [Command]
+        void CmdRegister(string name)
+        {
+            score.addPlayer(name);
+        }
+
+        [Command]
+        void CmdUpdateScore(string name)
+        {
+            score.score(name);
+        }
 }
