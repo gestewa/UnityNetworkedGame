@@ -6,17 +6,19 @@ using Mirror;
 public class PlayerController : NetworkBehaviour {
 
     public float speed;
-    public int id;
 
     private Rigidbody rb;
     private Vector3 movement;
     private bool isLocal;
+    private Score score;
+
+    public string playerName;
 
     void Start ()
     {
         isLocal = GetComponent<NetworkIdentity>().isLocalPlayer;
-        rb = GetComponent<Rigidbody>();
-        movement = new Vector3(0.0f, 0.0f, 0.0f);
+        score = GameObject.Find("ScoreKeeper").GetComponent<Score>();
+        score.addPlayer(playerName);
     }
 
     public override void OnStartLocalPlayer()
@@ -24,6 +26,7 @@ public class PlayerController : NetworkBehaviour {
         GetComponent<MeshRenderer>().material.color = Color.blue;
         // Pass the camera a refrence to this player's transform
         Camera.main.GetComponent<CameraController>().playerTransform = transform;
+        GetComponent<Roll>().enabled = true;
         
         // If the player was not rolling, this would be adequate
         // Camera.main.transform.position = transform.position - transform.forward * 10 + transform.up*3;
@@ -31,28 +34,15 @@ public class PlayerController : NetworkBehaviour {
         // Camera.main.transform.parent = transform;
     }
 
-    void FixedUpdate ()
-    {
-        if (!isLocal){ return; }
-        float moveHorizontal = Input.GetAxis ("right");
-        float moveVertical = Input.GetAxis ("up");
-
-        movement.x = moveHorizontal;
-        movement.z = moveVertical;
-
-        rb.AddForce (movement * speed);
-    }
-
+    [ServerCallback]
     void OnTriggerEnter(Collider other) 
     {
+        if (!isLocal){ return; }
         // Destroy collectable objects
         if (other.gameObject.CompareTag("Pickup"))
         {
             Destroy(other.gameObject);
+            score.score(playerName);
         }
-    }
-
-    public void setID(int ID){
-        id = ID;
     }
 }
