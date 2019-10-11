@@ -16,4 +16,9 @@ public class NetworkManagerLearn : NetworkManager
         NetworkServer.AddPlayerForConnection(conn, player);
     }
 
+    public override void OnClientDisconnect(NetworkConnection connection)
+    {
+        Debug.Log("Player disconnected");
+    }
+
 }

@@ -18,7 +18,9 @@ public class Score : NetworkBehaviour
 
     public override void OnStartServer()
     {
+        clear();
         // Don't need anything here
+        Debug.Log("Starting the score");
     }
 
     public override void OnStartClient()
@@ -29,17 +31,26 @@ public class Score : NetworkBehaviour
     }
     void OnScoreChange(SyncDictionaryStringItem.Operation op, string key, int score)
     {
-        display();
+        display(key, score);
         // equipment changed,  perhaps update the gameobject
         Debug.Log(op + " - " + key);
     }
 
 
-    public void display(){
+    public void display(string key, int new_score)
+    {
         scoreText.text = "";
         foreach (KeyValuePair<string, int> score in scores) {
-            Debug.Log(score.Key+": "+score.Value);
-            scoreText.text += score.Key+": "+score.Value + "\n";
+            if (score.Key == key)
+            {
+                Debug.Log(key + ": " + new_score);
+                scoreText.text += key + ": " + new_score + "\n";
+            }
+            else
+            {
+                Debug.Log(score.Key + ": " + score.Value);
+                scoreText.text += score.Key + ": " + score.Value + "\n";
+            }
         }
     }
 
