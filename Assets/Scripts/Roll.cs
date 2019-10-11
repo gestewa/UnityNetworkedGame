@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Roll : MonoBehaviour {
 
-    public float speed;
+    public float speed = 5;
 
     private Rigidbody rb;
     private Vector3 movement;

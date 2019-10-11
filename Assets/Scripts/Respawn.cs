@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Transform))]
 public class Respawn : MonoBehaviour
 {
     private Vector3 startPosition;

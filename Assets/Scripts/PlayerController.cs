@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+[RequireComponent(typeof(NetworkIdentity))]
+[RequireComponent(typeof(NetworkTransform))]
+[RequireComponent(typeof(Respawn))]
+[RequireComponent(typeof(Roll))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Transform))]
 public class PlayerController : NetworkBehaviour {
 
     public float speed;
@@ -23,7 +29,8 @@ public class PlayerController : NetworkBehaviour {
     public override void OnStartLocalPlayer()
     {
         score = GameObject.Find("ScoreKeeper").GetComponent<Score>();
-        CmdRegister(playerName);
+
+        CmdRegister();
 
         GetComponent<MeshRenderer>().material.color = Color.blue;
         // Pass the camera a refrence to this player's transform
@@ -36,6 +43,11 @@ public class PlayerController : NetworkBehaviour {
         // Camera.main.transform.parent = transform;
     }
 
+    public void OnDestroy(){
+        Debug.Log("Player: "+playerName+" exited");
+        // CmdDelete();
+    }
+
     void OnTriggerEnter(Collider other) 
     {
         if (!isLocal){ return; }
@@ -43,19 +55,25 @@ public class PlayerController : NetworkBehaviour {
         if (other.gameObject.CompareTag("Pickup"))
         {
             Destroy(other.gameObject);
-            CmdUpdateScore(playerName);
+            CmdUpdateScore();
         }
     }
 
-        [Command]
-        void CmdRegister(string name)
-        {
-            score.addPlayer(name);
-        }
+    [Command]
+    void CmdRegister()
+    {
+        score.addPlayer(playerName);
+    }
 
-        [Command]
-        void CmdUpdateScore(string name)
-        {
-            score.score(name);
-        }
+    [Command]
+    void CmdUpdateScore()
+    {
+        score.score(playerName);
+    }
+
+    [Command]
+    void CmdDelete()
+    {
+        score.deletePlayer(playerName);
+    }
 }
