@@ -597,6 +597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  ScoreName: MasterScore
   scoreText: {fileID: 1585861213}
 --- !u!114 &834752168
 MonoBehaviour:

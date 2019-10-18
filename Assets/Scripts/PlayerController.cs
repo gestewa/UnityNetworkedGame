@@ -17,9 +17,28 @@ public class PlayerController : NetworkBehaviour {
     private Vector3 movement;
     private bool isLocal;
     private Score score;
+    //private Score score
+    //{
+    //    get
+    //    {
+    //        if (_score == null)
+    //        {
+    //            GameObject o = GameObject.Find("ScoreKeeper");
+    //            _score = o.GetComponent<Score>();
+    //        }
+    //        return _score;
+    //    }
+    //}
 
     [HideInInspector]
+    [SyncVar]
     public string playerName;
+
+    private void Awake()
+    {
+        GameObject o = GameObject.Find("ScoreKeeper");
+        score = o.GetComponent<Score>();
+    }
 
     void Start ()
     {
@@ -27,9 +46,7 @@ public class PlayerController : NetworkBehaviour {
     }
 
     public override void OnStartLocalPlayer()
-    {
-        score = GameObject.Find("ScoreKeeper").GetComponent<Score>();
-
+    {        
         CmdRegister();
 
         GetComponent<MeshRenderer>().material.color = Color.blue;

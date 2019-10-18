@@ -8,17 +8,18 @@ public class Score : NetworkBehaviour
 {
     public class SyncDictionaryStringItem : SyncDictionary<string, int> {}
 
+    public string ScoreName;
     public Text scoreText;
-    private SyncDictionaryStringItem scores = new SyncDictionaryStringItem();
+    private readonly SyncDictionaryStringItem scores = new SyncDictionaryStringItem();
 
-    public void clear(){scores = new SyncDictionaryStringItem();}
+    public void clear(){scores.Clear();}
     public void deletePlayer(string name){scores.Remove(name);}
     public void score(string name){scores[name] += 1;}
     public void addPlayer(string name){ scores.Add(name, 0);}
 
     public override void OnStartServer()
     {
-        clear();
+        //clear();
         // Don't need anything here
         Debug.Log("Starting the score");
     }
@@ -29,6 +30,7 @@ public class Score : NetworkBehaviour
         // but we can subscribe to the callback in case it is updated later on
         scores.Callback += OnScoreChange;
     }
+
     void OnScoreChange(SyncDictionaryStringItem.Operation op, string key, int score)
     {
         display(key, score);
